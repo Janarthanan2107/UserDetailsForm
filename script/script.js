@@ -19,12 +19,12 @@ let items = [
 ]
 //functions
 const init = () => {
-    // existing data displayed
+    // existing data or upcoming data displayed here
     getData(items)
 }
 
 const rowTemplate = (item) => {
-    const { username, email, profession, contact, dob, gender } = item
+    const { id, username, email, profession, contact, dob, gender } = item
     const rowEl = document.createElement("tr")
     rowEl.classList.add("datatable-row")
     rowEl.innerHTML = `
@@ -37,7 +37,7 @@ const rowTemplate = (item) => {
     <td>
         <div class="option">
             <button class="btn-edit"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button class="btn-delete"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn-delete" onclick="deleteRow(${id})"><i class="fa-solid fa-trash"></i></button>
         </div>
     </td>
     `
@@ -46,13 +46,53 @@ const rowTemplate = (item) => {
 
 const getData = (items) => {
     bodyContainer.innerHTML = ""
-    
+
     if (items.length > 0) {
         items.forEach(element => {
             rowTemplate(element)
         });
     }
 }
+
+const deleteRow = (id) => {
+    items = items.filter((item) => item.id !== id)
+    getData(items)
+}
+
+submitBtn.addEventListener("click", () => {
+    const username = usernameEl.value;
+    const email = emailEl.value;
+    const selectedProfession = professionEl.options[professionEl.selectedIndex].value; // Get the selected profession value
+    const contact = contactEl.value;
+    const dob = dobEl.value;
+    const gender = maleEl.checked ? "male" : (femaleEl.checked ? "female" : (othersEl.checked ? "others" : ""))
+
+    if (username && email && selectedProfession && contact && dob && gender) {
+        const newItem = {
+            id: Date.now(),
+            username: username,
+            email: email,
+            profession: selectedProfession, // Use the selectedProfession here
+            contact: contact,
+            dob: dob,
+            gender: gender
+        };
+        items.push(newItem);
+
+        usernameEl.value = null
+        emailEl.value = null
+        professionEl.value = "Enter Your Profession"
+        contactEl.value = null
+        dobEl.value = null
+        maleEl.checked = null
+        femaleEl.checked = null
+        othersEl.checked = null
+        getData(items);
+    } else {
+        alert("All inputs are mandatory");
+    }
+});
+
 
 //events
 
