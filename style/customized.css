@@ -156,17 +156,30 @@ a {
     padding: 1rem 1rem;
 }
 
-.datatable-body .datatable-row .option {
-    display: flex;
-    gap: 10px;
+.datatable-body .datatable-row:hover {
+    background-color: #dee2e6;
 }
 
+.datatable-body .datatable-row .option {
+    display: flex;
+    gap: 20px;
+}
 
 .datatable-body .datatable-row .option button {
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
     background-color: transparent;
+}
+
+.datatable-body .datatable-row .option button .fa-pen-to-square:hover {
+    color: orange;
+    transition: 0.1s ease-in;
+}
+
+.datatable-body .datatable-row .option button .fa-trash:hover {
+    color: red;
+    transition: 0.1s ease-in;
 }
 
 .btn-submit {
