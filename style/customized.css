@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+:root {
+    /* colors are changeable always more combinations are in "https://coolors.co/" */
+    --clr-oxford-blue: hsla(226, 60%, 10%, 1);
+    --clr-penn-blue: hsla(218, 100%, 16%, 1);
+    --clr-indigo-dye: hsla(209, 95%, 24%, 1);
+    --clr-cerulean: hsla(193, 80%, 35%, 1);
+    --clr-white: hsla(20, 60%, 99%, 1);
+    --clr-Light-Gray: hsl(0, 0%, 75%);
+    --clr-mint-green: hsla(176, 62%, 87%, 1);
+    --clr-light-sea-green: hsla(174, 62%, 47%, 1);
+    --clr-Transparent-Soft-violet: hsla(0, 0%, 0%, 0.5);
+
+    /* animation and some effects */
+    --transition: all 0.3s linear;
+    --spacing: 0.1rem;
+    --radius: 0.25rem;
+    --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+
+    /* font-fam*/
+    --body-font-family: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+body {
+    font-family: var(--body-font-family);
+    text-decoration: var(--text-dec);
+    background-color: var(--clr-oxford-blue);
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    /* height: 100%; */
+    margin: 0.5rem 0.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.card {
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4.5px);
+    -webkit-backdrop-filter: blur(4.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.form-heading {
+    text-align: center;
+    margin-top: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.form {
+    padding: 1.5rem;
+    margin-top: -10px;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-control label {
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.form-input {
+    height: 50px;
+    padding: 0.5rem;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.radio-container div {
+    display: flex;
+    align-items: center;
+}
+
+.radio-container input[type="radio"] {
+    accent-color: red;
+    width: 15px;
+    height: 15px;
+}
+
+.datatable-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.datatable {
+    border-spacing: 0;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: white;
+}
+
+.datatable-header .datatable-row th {
+    text-align: left;
+    padding: 1rem 1rem;
+    border: 1px solid #dee2e6;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    color: #343a40;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s;
+}
+
+.datatable-body {
+    background-color: var(--clr-white);
+}
+
+.datatable-body .datatable-row td {
+    text-align: left;
+    border: 1px solid #dee2e6;
+    border-width: 0 0 1px 0;
+    padding: 1rem 1rem;
+}
+
+.datatable-body .datatable-row .option {
+    display: flex;
+    gap: 10px;
+}
+
+
+.datatable-body .datatable-row .option button {
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+}
