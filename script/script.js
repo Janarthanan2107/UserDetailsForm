@@ -12,11 +12,15 @@ const submitBtn = document.getElementById("submit")
 //outputs
 const bodyContainer = document.getElementById("tablebody")
 
-// global Variables
+// global Variables 
+// DataBase
 let items = [
-    { id: 1, username: "Jana", email: "Janarthanan@gmail.com", profession: "FullStack Developer", contact: "8110864319", dob: "07/10/2000", gender: "male" },
-    { id: 2, username: "Shalini", email: "ShaliniSkt@gmail.com", profession: "Python Developer", contact: "8667247110", dob: "21/03/2003", gender: "female" },
+    { id: 1, username: "Jana", email: "Janarthanan@gmail.com", profession: "FullStack Developer", contact: "8110864319", dob: "2000-10-07", gender: "male" },
+    { id: 2, username: "Shalini", email: "ShaliniSkt@gmail.com", profession: "Python Developer", contact: "8667247110", dob: "2003-03-21", gender: "female" },
 ]
+let isEditing;
+let itemToEdit;
+
 //functions
 const init = () => {
     // existing data or upcoming data displayed here
@@ -28,15 +32,15 @@ const rowTemplate = (item) => {
     const rowEl = document.createElement("tr")
     rowEl.classList.add("datatable-row")
     rowEl.innerHTML = `
-    <td>${username}</td>
-    <td>${email}</td>
+    <td>${username.charAt(0).toUpperCase() + username.slice(1)}</td>
+    <td>${email.charAt(0).toUpperCase() + email.slice(1)}</td>
     <td>${profession}</td>
     <td>${contact}</td>
     <td>${dob}</td>
-    <td>${gender}</td>
+    <td>${gender.charAt(0).toUpperCase() + gender.slice(1)}</td>
     <td>
         <div class="option">
-            <button class="btn-edit"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="btn-edit" onClick="updateRow(${id})"><i class="fa-solid fa-pen-to-square"></i></button>
             <button class="btn-delete" onclick="deleteRow(${id})"><i class="fa-solid fa-trash"></i></button>
         </div>
     </td>
@@ -47,54 +51,106 @@ const rowTemplate = (item) => {
 const getData = (items) => {
     bodyContainer.innerHTML = ""
 
-    if (items.length > 0) {
-        items.forEach(element => {
-            rowTemplate(element)
-        });
-    }
+    items.forEach(item => {
+        rowTemplate(item)
+    });
+}
+
+const nullishData = () => {
+    usernameEl.value = ''
+    emailEl.value = ''
+    professionEl.value = 'Enter Your Profession'
+    contactEl.value = ''
+    dobEl.value = ''
+    maleEl.checked = false;
+    femaleEl.checked = false;
+    othersEl.checked = false;
 }
 
 const deleteRow = (id) => {
     items = items.filter((item) => item.id !== id)
+    console.log(items)
     getData(items)
 }
 
+const updateRow = (id) => {
+    isEditing = true
+    submitBtn.innerText = "Update"
+    console.log("Yes Im ready to edit")
+    // finding the data with id
+    itemToEdit = items.find((item) => item.id === id)
+    console.log(itemToEdit)
+
+    // updating El with the found values
+    usernameEl.value = itemToEdit.username;
+    emailEl.value = itemToEdit.email;
+    professionEl.value = itemToEdit.profession;
+    contactEl.value = itemToEdit.contact;
+    dobEl.value = itemToEdit.dob;
+    // updating the genderEl with value
+    if (itemToEdit.gender === "male") {
+        maleEl.checked = true;
+    } else if (itemToEdit.gender === "female") {
+        femaleEl.checked = true;
+    } else if (itemToEdit.gender === "others") {
+        othersEl.checked = true;
+    }
+}
+
+//events
 submitBtn.addEventListener("click", () => {
     const username = usernameEl.value;
     const email = emailEl.value;
-    const selectedProfession = professionEl.options[professionEl.selectedIndex].value; // Get the selected profession value
+    const profession = professionEl.value;
     const contact = contactEl.value;
     const dob = dobEl.value;
-    const gender = maleEl.checked ? "male" : (femaleEl.checked ? "female" : (othersEl.checked ? "others" : ""))
+    const gender = maleEl.checked ? "male" : "" || femaleEl.checked ? "female" : "" || othersEl.checked ? "others" : "";
+    console.log(`username:${username}, email:${email}, profession:${profession}, contact:${contact}, dob:${dob}, gender:${gender}`)
 
-    if (username && email && selectedProfession && contact && dob && gender) {
-        const newItem = {
-            id: Date.now(),
-            username: username,
-            email: email,
-            profession: selectedProfession, // Use the selectedProfession here
-            contact: contact,
-            dob: dob,
-            gender: gender
-        };
-        items.push(newItem);
+    if (username && email && profession) {
+        if (isEditing) {
+            //Update an existing
+            const updateItems = {
+                id: itemToEdit.id,
+                username: username,
+                email: email,
+                profession: profession,
+                contact: contact,
+                dob: dob,
+                gender: gender
+            }
 
-        usernameEl.value = null
-        emailEl.value = null
-        professionEl.value = "Enter Your Profession"
-        contactEl.value = null
-        dobEl.value = null
-        maleEl.checked = null
-        femaleEl.checked = null
-        othersEl.checked = null
-        getData(items);
+            // Find the index of the item to update
+            const indexToUpdate = items.findIndex((item) => item.id === itemToEdit.id)
+            items[indexToUpdate] = updateItems
+
+            console.log(updateItems)
+            isEditing = false
+            submitBtn.innerText = "Submit"
+        } else {
+            //create new item / addRow
+            const newItems = {
+                id: Date.now(),
+                username: username,
+                email: email,
+                profession: profession,
+                contact: contact,
+                dob: dob,
+                gender: gender
+            }
+
+            // new items got pushed
+            console.log(newItems)
+            items.push(newItems)
+        }
     } else {
-        alert("All inputs are mandatory");
+        alert("username & email & profession are Mandatory")
     }
+
+    // existing items and new item get fetch and null the fields
+    nullishData()
+    getData(items)
 });
-
-
-//events
 
 //initial settings
 init();

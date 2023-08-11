@@ -76,7 +76,8 @@ a {
     margin-top: 1rem;
     text-decoration: underline;
     text-underline-offset: 5px;
-    color: var(--clr-penn-blue);
+    color: var(--clr-mint-green);
+    margin-bottom: 20px;
 }
 
 .form {
